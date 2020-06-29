@@ -10,7 +10,6 @@ alias cg='cd `git rev-parse --show-toplevel`'
 # Grep related aliases and functions
 alias grep='grep --color=auto'
 alias clgrep='grep --color=always'
-dfind() { grep --color=always -ir $1 | less -R ; }
 
 # Misc useful aliases
 alias ..='cd ..'

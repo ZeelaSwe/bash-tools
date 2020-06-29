@@ -3,30 +3,83 @@ echo "Installing Zeela's aliases for productivity."
 
 ##To check for a particular  string in a file
 
-aliasFile=~/.bash_aliases  
+aliasFile=~/.bash_aliases
 inputFile=aliases.sh
 
-if [ -f "$File" ]
+if [ ! -f "$aliasFile" ]
  then 
-    echo " alias file exists "
- else
-    echo " alias file does not exist "
- fi
-
-if grep -q "alias gitb=" "$alliasFile"; ##note the space after the string you are searching for
-   then
-     echo "Hooray!!It's available"
-   else
-     echo "Oops!!Not available"
+    if [! -z $verbose ]
+     then
+      echo " Creating $aliasFile "
+    fi
+    touch $aliasFile
 fi
 
+echo "Debug=$debug"
+echo "Verbose=$verbose"
 
-echo Start
-while read p; do 
-    echo "-> " $p
-    if grep -q "alias[ ]*gitb=" ~/.bash_aliases; then
-      echo  SomeString was found
-    fi
-done < $inputFile
+if [ ! -z $debug ]
+ then
+  echo $aliasFile " - Content"
+  cat $aliasFile 
+fi
 
-#cat aliases.sh >> ~/.bash_aliases
+echo "Updating aliases"
+
+grep "alias .*=" $inputFile | while read line ;
+do
+  search=$( echo ${line//./\\.} | cut -d=  -f1 )
+  if grep -q  "$search=" "$aliasFile"; 
+    then
+      if [ ! -z $verbose ]
+      then
+        echo "Replacing $search with $line"
+      fi
+      sed -i "s%^$search=.*%$line%" $aliasFile
+    else
+      if [ ! -z $verbose ]
+      then
+        echo "Adding: $line"
+      fi
+      echo "$line" >> $aliasFile
+  fi
+done
+
+echo "Updating functions"
+inputFile=functions.sh
+
+cat $inputFile | while read line ;
+do
+  tmp=$( echo ${line//(/\\(} )
+  search=$( echo ${tmp//)/\\)} | cut -d"{" -f1 )
+  search=$( echo $line | cut -d"{" -f1 )
+  echo "Search: $search"
+  if grep -q  "$search" "$aliasFile"; 
+    then
+      if [ ! -z $verbose ]
+      then
+        echo "Replacing $search with $line"
+      fi
+      sed -i "s%$search.*%$line%" $aliasFile
+    else
+      if [ ! -z $verbose ]
+      then
+        echo "Adding: $line"
+      fi
+      echo "$line" >> $aliasFile
+  fi
+done
+
+if [ ! -z $debug ]
+ then
+  echo "After"
+  cat $aliasFile
+fi 
+
+echo "Updating global git-aliases"
+cat git-aliases.sh | bash
+
+echo "Sourcing $aliasFile"
+. $aliasFile
+
+

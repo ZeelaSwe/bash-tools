@@ -59,7 +59,7 @@ cat $inputFile | while read line ;
 do
   search=$( echo $line | cut -d"{" -f1 )
 
-  if grep -q  "$search" "$aliasFile"; 
+  if grep -q  "$search" "$aliasFile" ; 
     then
       if [ ! -z $verbose ]
       then

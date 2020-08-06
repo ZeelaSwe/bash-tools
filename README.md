@@ -1,2 +1,2 @@
 # gittools
-Aliases and tools for making life with git easier
+Aliases, functions and scripts for making life in bash a bit easier

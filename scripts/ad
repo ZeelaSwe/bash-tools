@@ -1,0 +1,12 @@
+#!/bin/bash
+shopt -s expand_aliases
+source ~/.bash_aliases
+
+for i in $(ls -d */); 
+do 
+    cd ${i} ; 
+    echo "====> ${i} applying \"${@:1}\"" ; 
+    "${@:1}" ; 
+    cd - > /dev/null ; 
+    echo ; 
+done ;

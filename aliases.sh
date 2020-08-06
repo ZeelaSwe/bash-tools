@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Git specific aliases
 alias gitb='git branch'
 alias gitl='git log'

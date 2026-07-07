@@ -9,7 +9,7 @@ inputFile=aliases.sh
 
 if [ ! -f "$aliasFile" ]
  then 
-    if [! -z $verbose ]
+    if [ ! -z $verbose ]
      then
       echo " Creating $aliasFile "
     fi

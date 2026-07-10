@@ -19,5 +19,6 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
+alias ll='ls -alF'
 alias lt='ls --human-readable --size -1 -S --classify'
 alias gh='history|grep'

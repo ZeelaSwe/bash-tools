@@ -14,6 +14,8 @@ alias grep='grep --color=auto'
 alias clgrep='grep --color=always'
 
 # Misc useful aliases
+alias home='cd ~'
+alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
